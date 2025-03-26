@@ -1,39 +1,18 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "extra": {
       "eas": {
-        "projectId": "794adcd4-f91a-44ff-b634-c4c59f51cc7a"
+        "projectId": "9c365f9e-6c89-487c-9659-6ecdb9dfba42"
       }
     },
+    "owner": "kartavyagupta96",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/794adcd4-f91a-44ff-b634-c4c59f51cc7a"
-    }
+      "url": "https://u.expo.dev/9c365f9e-6c89-487c-9659-6ecdb9dfba42"
+    },
+    "android": {},
+    "ios": {}
   }
 }
