@@ -1,12 +1,19 @@
 import React, { useState, useContext } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, StyleSheet, Text } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 import { AuthContext } from "../context/AuthContext.jsx";
+import * as Yup from "yup";
+
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  passwordConfirmation: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Password confirmation is required"),
+});
 
 const SignupScreen = ({ navigation }) => {
   const { signup } = useContext(AuthContext);
@@ -18,16 +25,31 @@ const SignupScreen = ({ navigation }) => {
 
   const handleSignup = async () => {
     try {
+      // Validate form data using Yup
+      await SignupSchema.validate({
+        name,
+        email,
+        password,
+        passwordConfirmation,
+      });
+
+      // Clear any previous error if validation passes
+      setError("");
+
       const res = await signup(name, email, password, passwordConfirmation);
       console.log(res);
       if (res.message !== "registration successfull") {
-        console.log("coming here");
         setError("Registration failed");
       } else {
         navigation.replace("Login");
       }
-    } catch (error) {
-      alert("Signup failed. Possibly user already exists.");
+    } catch (err) {
+      // If the error is a Yup validation error, display its message
+      if (err.name === "ValidationError") {
+        setError(err.message);
+      } else {
+        alert("Signup failed. Possibly user already exists.");
+      }
     }
   };
 
@@ -35,38 +57,38 @@ const SignupScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.header}>Signup</Text>
       <TextInput
-        placeholder="Name"
-        placeholderTextColor="#999"
+        label="Name"
+        mode="outlined"
         value={name}
         onChangeText={setName}
         style={styles.input}
       />
       <TextInput
-        placeholder="Email"
-        placeholderTextColor="#999"
+        label="Email"
+        mode="outlined"
         value={email}
         onChangeText={setEmail}
         style={styles.input}
       />
       <TextInput
-        placeholder="Password"
-        placeholderTextColor="#999"
+        label="Password"
+        mode="outlined"
         value={password}
         onChangeText={setPassword}
-        style={styles.input}
         secureTextEntry
+        style={styles.input}
       />
       <TextInput
-        placeholder="Password Confirmation"
-        placeholderTextColor="#999"
+        label="Password Confirmation"
+        mode="outlined"
         value={passwordConfirmation}
         onChangeText={setPasswordConfirmation}
-        style={styles.input}
         secureTextEntry
+        style={styles.input}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Signup</Text>
-      </TouchableOpacity>
+      <Button mode="contained" onPress={handleSignup} style={styles.button}>
+        Signup
+      </Button>
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
@@ -88,25 +110,11 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    borderWidth: 1,
-    borderColor: "#3b5998", // Facebook blue
-    borderRadius: 5,
-    padding: 12,
     marginVertical: 5,
-    color: "#000",
   },
   button: {
     width: "100%",
-    backgroundColor: "#3b5998", // Facebook blue
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
     marginVertical: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
   errorText: {
     color: "#d93025", // A Facebook-inspired red

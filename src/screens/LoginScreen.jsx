@@ -1,11 +1,6 @@
 import React, { useState, useContext } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { View, StyleSheet, Text } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 import { AuthContext } from "../context/AuthContext.jsx";
 
 const LoginScreen = ({ navigation }) => {
@@ -26,29 +21,32 @@ const LoginScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.header}>Login</Text>
       <TextInput
-        placeholder="Email"
-        placeholderTextColor="#999"
+        label="Email"
+        mode="outlined"
+        placeholder="Enter your email"
         value={email}
         onChangeText={setEmail}
         style={styles.input}
       />
       <TextInput
-        placeholder="Password"
-        placeholderTextColor="#999"
+        label="Password"
+        mode="outlined"
+        placeholder="Enter your password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         style={styles.input}
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonOutline}
+      <Button mode="contained" onPress={handleLogin} style={styles.button}>
+        Login
+      </Button>
+      <Button
+        mode="outlined"
         onPress={() => navigation.navigate("SignUp")}
+        style={styles.buttonOutline}
       >
-        <Text style={styles.buttonOutlineText}>Go to Signup</Text>
-      </TouchableOpacity>
+        Go to Signup
+      </Button>
     </View>
   );
 };
@@ -69,38 +67,15 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    borderWidth: 1,
-    borderColor: "#3b5998",
-    borderRadius: 5,
-    padding: 12,
     marginVertical: 5,
-    color: "#000",
   },
   button: {
     width: "100%",
-    backgroundColor: "#3b5998", // Facebook blue
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
     marginVertical: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
   buttonOutline: {
     width: "100%",
-    borderColor: "#3b5998",
-    borderWidth: 1,
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  buttonOutlineText: {
-    color: "#3b5998",
-    fontSize: 16,
-    fontWeight: "bold",
+    marginVertical: 10,
   },
 });
 

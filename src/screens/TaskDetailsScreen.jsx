@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 import API from "../api";
 
 const TaskDetailsScreen = ({ route, navigation }) => {
@@ -54,30 +49,40 @@ const TaskDetailsScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Edit Task</Text>
-      <TextInput style={styles.input} value={title} onChangeText={setTitle} />
       <TextInput
+        label="Title"
+        mode="outlined"
+        value={title}
+        onChangeText={setTitle}
         style={styles.input}
+      />
+      <TextInput
+        label="Description"
+        mode="outlined"
         value={description}
         onChangeText={setDescription}
+        style={styles.input}
       />
-      <TouchableOpacity
-        style={styles.button}
+      <Button
+        mode="contained"
         onPress={() => {
           handleUpdate();
           fetchTasks();
         }}
+        style={styles.button}
       >
-        <Text style={styles.buttonText}>Update</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonOutline}
+        Update
+      </Button>
+      <Button
+        mode="outlined"
         onPress={() => {
           handleDelete();
           fetchTasks();
         }}
+        style={styles.buttonOutline}
       >
-        <Text style={styles.buttonOutlineText}>Delete</Text>
-      </TouchableOpacity>
+        Delete
+      </Button>
     </View>
   );
 };
@@ -86,6 +91,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    paddingTop: 30,
     backgroundColor: "#fff",
   },
   header: {
@@ -103,38 +109,15 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    borderWidth: 1,
-    borderColor: "#3b5998",
-    borderRadius: 5,
-    padding: 12,
     marginVertical: 5,
-    color: "#000",
   },
   button: {
     width: "100%",
-    backgroundColor: "#3b5998",
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
     marginVertical: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
   buttonOutline: {
     width: "100%",
-    borderColor: "#3b5998",
-    borderWidth: 1,
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  buttonOutlineText: {
-    color: "#3b5998",
-    fontSize: 16,
-    fontWeight: "bold",
+    marginVertical: 10,
   },
 });
 

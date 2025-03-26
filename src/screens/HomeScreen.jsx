@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   FlatList,
   RefreshControl,
   StyleSheet,
   SafeAreaView,
 } from "react-native";
+import { Button } from "react-native-paper";
 import { AuthContext } from "../context/AuthContext.jsx";
 import API from "../api";
 
@@ -38,17 +38,18 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={() => logout()}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
+        <Button mode="contained" onPress={logout} style={styles.button}>
+          Logout
+        </Button>
+        <Button
+          mode="contained"
           onPress={() =>
             navigation.navigate("AddTask", { fetchTasks: fetchTasks })
           }
+          style={styles.button}
         >
-          <Text style={styles.buttonText}>Add Task</Text>
-        </TouchableOpacity>
+          Add Task
+        </Button>
 
         <FlatList
           data={tasks}
@@ -83,15 +84,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   button: {
-    backgroundColor: "#3b5998", // Facebook blue
-    padding: 12,
-    borderRadius: 5,
     marginVertical: 5,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
   },
   taskItem: {
     padding: 10,

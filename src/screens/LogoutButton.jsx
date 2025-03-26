@@ -1,6 +1,6 @@
-// LogoutButton.jsx
 import React, { useContext, useState } from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
 import { AuthContext } from "../context/AuthContext.jsx";
 
 const LogoutButton = () => {
@@ -17,28 +17,20 @@ const LogoutButton = () => {
   };
 
   return (
-    <TouchableOpacity
-      style={styles.button}
+    <Button
+      mode="contained"
       onPress={handleLogout}
       disabled={isLoggingOut}
+      style={styles.button}
     >
-      <Text style={styles.buttonText}>
-        {isLoggingOut ? "Logging out..." : "Logout"}
-      </Text>
-    </TouchableOpacity>
+      {isLoggingOut ? "Logging out..." : "Logout"}
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
     marginRight: 10,
-    backgroundColor: "#3b5998", // Facebook blue
-    padding: 8,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
   },
 });
 

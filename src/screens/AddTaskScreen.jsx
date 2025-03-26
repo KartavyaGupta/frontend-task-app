@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 import API from "../api";
 
 const AddTaskScreen = ({ navigation, route }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { fetchTasks } = route.params;
-  console.log(route.params);
 
   const handleAddTask = async () => {
     try {
@@ -29,27 +23,22 @@ const AddTaskScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <Text style={styles.header}>Add Task</Text>
       <TextInput
-        placeholder="Title"
-        style={styles.input}
+        label="Title"
+        mode="outlined"
         value={title}
         onChangeText={setTitle}
-        placeholderTextColor="#999"
+        style={styles.input}
       />
       <TextInput
-        placeholder="Description"
-        style={styles.input}
+        label="Description"
+        mode="outlined"
         value={description}
         onChangeText={setDescription}
-        placeholderTextColor="#999"
+        style={styles.input}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          handleAddTask();
-        }}
-      >
-        <Text style={styles.buttonText}>Save</Text>
-      </TouchableOpacity>
+      <Button mode="contained" onPress={handleAddTask} style={styles.button}>
+        Save
+      </Button>
     </View>
   );
 };
@@ -57,36 +46,22 @@ const AddTaskScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff", // White background
+    backgroundColor: "#fff",
     justifyContent: "center",
     padding: 16,
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#3b5998", // Facebook blue
+    color: "#3b5998",
     textAlign: "center",
     marginBottom: 20,
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#3b5998", // Facebook blue
-    borderRadius: 5,
-    padding: 10,
     marginVertical: 5,
-    color: "#000",
   },
   button: {
-    backgroundColor: "#3b5998", // Facebook blue
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
     marginVertical: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
 
