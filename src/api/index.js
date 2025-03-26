@@ -11,7 +11,8 @@ const getToken = async () => {
 };
 
 const API = axios.create({
-  baseURL: "http://192.168.1.21:3000",
+  baseURL: "https://backend-task-app-lime.vercel.app/",
+  timeout: 20000, // 10 seconds
 });
 
 API.interceptors.request.use(async (config) => {

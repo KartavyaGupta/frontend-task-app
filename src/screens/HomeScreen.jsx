@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   View,
-  Text,
   FlatList,
   RefreshControl,
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Card, Title, Paragraph } from "react-native-paper";
 import { AuthContext } from "../context/AuthContext.jsx";
 import API from "../api";
 
@@ -35,6 +34,23 @@ const HomeScreen = ({ navigation }) => {
     fetchTasks().then(() => setRefreshing(false));
   }, []);
 
+  const renderItem = ({ item }) => (
+    <Card
+      style={styles.card}
+      onPress={() =>
+        navigation.navigate("TaskDetails", {
+          taskId: item._id,
+          fetchTasks: fetchTasks,
+        })
+      }
+    >
+      <Card.Content>
+        <Title>{item.title}</Title>
+        <Paragraph>Tap to edit/delete</Paragraph>
+      </Card.Content>
+    </Card>
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -54,19 +70,8 @@ const HomeScreen = ({ navigation }) => {
         <FlatList
           data={tasks}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <Text
-              style={styles.taskItem}
-              onPress={() =>
-                navigation.navigate("TaskDetails", {
-                  taskId: item._id,
-                  fetchTasks: fetchTasks,
-                })
-              }
-            >
-              {item.title + " - tap to edit/delete"}
-            </Text>
-          )}
+          renderItem={renderItem}
+          contentContainerStyle={styles.list}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -80,19 +85,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "#f2f2f2",
     paddingTop: 40,
   },
   button: {
     marginVertical: 5,
   },
-  taskItem: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#3b5998",
-    marginVertical: 5,
-    borderRadius: 5,
-    color: "#000",
+  list: {
+    paddingVertical: 10,
+  },
+  card: {
+    marginVertical: 8,
+    borderRadius: 8,
+    elevation: 3, // adds a subtle shadow for Android
+    // For iOS, you can also add shadow properties if needed:
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
 });
 
